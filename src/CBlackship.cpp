@@ -1,5 +1,5 @@
 
-#include "blackship_control/CBlackship.h"
+#include "ros_blackship/CBlackship.h"
 
 CBlackship::CBlackship() {
 

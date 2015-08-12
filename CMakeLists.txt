@@ -1,20 +1,5 @@
 cmake_minimum_required(VERSION 2.8.3)
-project(blackship_control)
-
-
-set(MY_SOURCES
-src/CBlackship.cpp
-src/bs_if.cpp
-src/serial.cpp
-)
-set(MY_HEADERS
-include/blackship_control/CBlackship.h
-include/blackship_control/bs_if.h
-include/blackship_control/bs_config.h
-include/blackship_control/serial.h
-include/blackship_control/myUtils.h
-)
-
+project(ros_blackship)
 
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
@@ -23,7 +8,13 @@ find_package(catkin REQUIRED COMPONENTS
   geometry_msgs
   nav_msgs
   roscpp
+  rospy
+  sensor_msgs
+  std_msgs
   tf
+  tf2
+  urdf
+  xacro
 )
 
 ## System dependencies are found with CMake's conventions
@@ -83,7 +74,7 @@ find_package(catkin REQUIRED COMPONENTS
 ## Generate added messages and services with any dependencies listed here
 # generate_messages(
 #   DEPENDENCIES
-#   geometry_msgs
+#   geometry_msgs#   nav_msgs#   sensor_msgs#   std_msgs
 # )
 
 ###################################
@@ -96,9 +87,9 @@ find_package(catkin REQUIRED COMPONENTS
 ## CATKIN_DEPENDS: catkin_packages dependent projects also need
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
-	INCLUDE_DIRS include
-#  LIBRARIES blackship_control
-	CATKIN_DEPENDS geometry_msgs roscpp tf
+ INCLUDE_DIRS include
+#  LIBRARIES ros_blackship
+ CATKIN_DEPENDS geometry_msgs nav_msgs roscpp rospy sensor_msgs std_msgs tf tf2 urdf xacro
 #  DEPENDS system_lib
 )
 
@@ -110,25 +101,28 @@ catkin_package(
 ## Your package locations should be listed before other locations
 # include_directories(include)
 include_directories(
-	include
-	${catkin_INCLUDE_DIRS}
+  include
+  ${catkin_INCLUDE_DIRS}
 )
 
 ## Declare a cpp library
-# add_library(blackship_control
-#   src/${PROJECT_NAME}/blackship_control.cpp
-# )
+# add_library(ros_blackship src/${PROJECT_NAME}/ros_blackship.cpp)
 
 ## Declare a cpp executable
-add_executable(blackship_control_node src/main.cpp ${MY_SOURCES} ${MY_HEADERS})
+add_executable(ros_blackship_node
+  src/main.cpp
+  src/CBlackship.cpp
+  src/bs_if.cpp
+  src/serial.cpp
+)
 
 ## Add cmake target dependencies of the executable/library
 ## as an example, message headers may need to be generated before nodes
-# add_dependencies(blackship_control_node blackship_control_generate_messages_cpp)
+add_dependencies(ros_blackship_node ros_blackship_generate_messages_cpp)
 
 ## Specify libraries to link a library or executable target against
-target_link_libraries(blackship_control_node
-	${catkin_LIBRARIES}
+target_link_libraries(ros_blackship_node
+  ${catkin_LIBRARIES}
 )
 
 #############
@@ -146,7 +140,7 @@ target_link_libraries(blackship_control_node
 # )
 
 ## Mark executables and/or libraries for installation
-# install(TARGETS blackship_control blackship_control_node
+# install(TARGETS ros_blackship ros_blackship_node
 #   ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
 #   LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
 #   RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
@@ -171,7 +165,7 @@ target_link_libraries(blackship_control_node
 #############
 
 ## Add gtest based cpp test target and link libraries
-# catkin_add_gtest(${PROJECT_NAME}-test test/test_blackship_control.cpp)
+# catkin_add_gtest(${PROJECT_NAME}-test test/test_ros_blackship.cpp)
 # if(TARGET ${PROJECT_NAME}-test)
 #   target_link_libraries(${PROJECT_NAME}-test ${PROJECT_NAME})
 # endif()

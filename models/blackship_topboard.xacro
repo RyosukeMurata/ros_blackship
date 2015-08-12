@@ -1,0 +1,81 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+    <xacro:include filename="$(find ros_blackship)/models/define.xacro"/>
+    <xacro:include filename="$(find ros_blackship)/models/config.xacro"/>
+    <xacro:include filename="$(find ros_blackship)/models/property.xacro"/>
+
+
+    <xacro:macro name="blackship_offset_pole"
+                 params="parent_link suffix *origin">
+        <joint name="${joint_blackship_offset_pole}_${suffix}" type="fixed">
+            <insert_block name="origin"/>
+            <parent link="${parent_link}"/>
+            <child link="${link_blackship_offset_pole}_${suffix}"/>
+        </joint>
+
+        <link name="${link_blackship_offset_pole}_${suffix}">
+            <visual>
+                <origin rpy="0 0 0" xyz="0 0 0"/>
+                <geometry>
+                    <box size="${blackship_offset_pole_depth} ${blackship_offset_pole_width} ${blackship_offset_pole_height}"/>
+                </geometry>
+                <material name="wheel_offset_pole_color">
+                    <color rgba="0.8 0.8 0.8 1"/>
+                </material>
+            </visual>
+        </link>
+    </xacro:macro>
+
+
+    <property name="offset_pole_placement_rate" value="0.8"/>
+    <property name="offset_pole_placement_depth" value="${blackship_body_depth*offset_pole_placement_rate}"/>
+    <property name="offset_pole_placement_width" value="${blackship_body_width*offset_pole_placement_rate}"/>
+
+    <xacro:macro name="blackship_topboard" params="parent_offset_center_link">
+        <xacro:blackship_offset_pole
+                parent_link="${parent_offset_center_link}" suffix="frontleft">
+            <origin rpy="0 0 0"
+                    xyz="${offset_pole_placement_depth/2.0} ${offset_pole_placement_width/2.0} 0"/>
+        </xacro:blackship_offset_pole>
+
+        <xacro:blackship_offset_pole
+                parent_link="${parent_offset_center_link}" suffix="frontright">
+            <origin rpy="0 0 0"
+                    xyz="${offset_pole_placement_depth/2.0} ${-offset_pole_placement_width/2.0} 0"/>
+        </xacro:blackship_offset_pole>
+
+        <xacro:blackship_offset_pole
+                parent_link="${parent_offset_center_link}" suffix="rearleft">
+            <origin rpy="0 0 0"
+                    xyz="${-offset_pole_placement_depth/2.0} ${offset_pole_placement_width/2.0} 0"/>
+        </xacro:blackship_offset_pole>
+
+        <xacro:blackship_offset_pole
+                parent_link="${parent_offset_center_link}" suffix="rearright">
+            <origin rpy="0 0 0"
+                    xyz="${-offset_pole_placement_depth/2.0} ${-offset_pole_placement_width/2.0} 0"/>
+        </xacro:blackship_offset_pole>
+
+
+        <joint name="${joint_blackship_topboard}" type="fixed">
+            <origin rpy="0 0 0"
+                    xyz="0 0 ${blackship_offset_pole_height/2.0}"/>
+            <parent link="${parent_offset_center_link}"/>
+            <child link="${link_blackship_topboard}"/>
+        </joint>
+
+        <link name="${link_blackship_topboard}">
+            <visual>
+                <origin rpy="0 0 0" xyz="0 0 0"/>
+                <geometry>
+                    <box size="${blackship_topboard_depth} ${blackship_topboard_width} ${blackship_topboard_height}"/>
+                </geometry>
+                <material name="topboard_color">
+                    <color rgba="0.2 0.2 0.2 1"/>
+                </material>
+            </visual>
+        </link>
+
+    </xacro:macro>
+
+</robot>

@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+    <xacro:include filename="$(find ros_blackship)/models/define.xacro"/>
+    <xacro:include filename="$(find ros_blackship)/models/config.xacro"/>
+    <xacro:include filename="$(find ros_blackship)/models/property.xacro"/>
+    <xacro:include filename="$(find ros_blackship)/models/blackship_wheels.xacro"/>
+    <xacro:include filename="$(find ros_blackship)/models/blackship_topboard.xacro"/>
+
+    <xacro:macro name="blackship" params="parent_link">
+        <joint name="${joint_blackship_body}" type="fixed">
+            <origin rpy="0 0 0"
+                    xyz="0 0 ${blackship_wheel_radius}"/>
+            <parent link="${parent_link}"/>
+            <child link="${link_blackship_body}"/>
+        </joint>
+
+        <link name="${link_blackship_body}">
+            <visual>
+                <origin rpy="0 0 0" xyz="0 0 0"/>
+                <geometry>
+                    <box size="${blackship_body_depth} ${blackship_body_width} ${blackship_body_height}"/>
+                </geometry>
+                <material name="body_color">
+                    <color rgba="0.2 0.2 0.2 1"/>
+                </material>
+            </visual>
+        </link>
+
+        <xacro:blackship_wheels
+                parent_center_link="${link_blackship_body}"/>
+        <joint name="${joint_blackship_offset_center}" type="fixed">
+            <origin rpy="0 0 0"
+                    xyz="0 0 ${blackship_body_height/2.0 + blackship_offset_pole_height/2.0}"/>
+            <parent link="${link_blackship_body}"/>
+            <child link="${link_blackship_offset_center}"/>
+        </joint>
+
+        <link name="${link_blackship_offset_center}"/>
+
+        <xacro:blackship_topboard
+                parent_offset_center_link="${link_blackship_offset_center}"/>
+
+    </xacro:macro>
+
+</robot>

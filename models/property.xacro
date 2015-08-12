@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<robot>
+    <!--SEE http://homepage3.nifty.com/orangejuice/-->
+    <!--All values are in [m]-->
+    <!--x is radius-->
+
+    <property name="blackship_body_depth" value="0.600"/>
+    <property name="blackship_body_width" value="0.300"/>
+    <property name="blackship_body_height" value="0.150"/>
+
+    <property name="blackship_wheel_radius" value="0.160"/>
+    <property name="blackship_wheel_width" value="0.030"/>
+    <property name="blackship_wheel_wheelbase" value="0.350"/>
+    <property name="blackship_wheel_track" value="0.340"/>
+
+    <property name="blackship_offset_pole_depth" value="0.020"/>
+    <property name="blackship_offset_pole_width" value="0.020"/>
+    <property name="blackship_offset_pole_height" value="0.060"/>
+
+    <property name="blackship_topboard_depth" value="${blackship_body_depth}"/>
+    <property name="blackship_topboard_width" value="${blackship_body_width}"/>
+    <property name="blackship_topboard_height" value="0.003"/>
+
+
+</robot>

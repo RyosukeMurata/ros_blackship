@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<robot>
+
+    <property name="joint_blackship_body" value="joint_blackship_body"/>
+    <property name="joint_blackship_wheel" value="joint_blackship_wheel"/>
+    <property name="joint_blackship_offset_pole" value="joint_blackship_offset_pole"/>
+    <property name="joint_blackship_topboard" value="joint_blackship_topboard"/>
+    <property name="joint_blackship_offset_center" value="joint_blackship_offset_center"/>
+
+    <property name="link_blackship_body" value="link_blackship_body"/>
+    <property name="link_blackship_wheel" value="link_blackship_wheel"/>
+    <property name="link_blackship_offset_pole" value="link_blackship_offset_pole"/>
+    <property name="link_blackship_topboard" value="link_blackship_topboard"/>
+    <property name="link_blackship_offset_center" value="link_blackship_offset_center"/>
+
+</robot>

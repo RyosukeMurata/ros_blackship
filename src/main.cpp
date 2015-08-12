@@ -1,6 +1,6 @@
 #include <iostream>
 #include "ros/ros.h"
-#include "blackship_control/CBlackship.h"
+#include "ros_blackship/CBlackship.h"
 
 int main(int argc, char** argv) {
 
