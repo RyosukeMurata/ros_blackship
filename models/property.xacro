@@ -1,8 +1,9 @@
 <?xml version="1.0"?>
 <robot>
     <!--SEE http://homepage3.nifty.com/orangejuice/-->
-    <!--All values are in [m]-->
+    <!--All values are in [m][kg]-->
     <!--x is radius-->
+
 
     <property name="blackship_body_depth" value="0.600"/>
     <property name="blackship_body_width" value="0.300"/>
@@ -20,6 +21,26 @@
     <property name="blackship_topboard_depth" value="${blackship_body_depth}"/>
     <property name="blackship_topboard_width" value="${blackship_body_width}"/>
     <property name="blackship_topboard_height" value="0.003"/>
+
+    <!--==========================================================-->
+
+    <property name="blackship_body_weight" value="20"/>
+    <property name="blackship_body_inertia">
+        <inertia
+                ixx="${(1.0/3.0)*blackship_body_weight*(blackship_body_width*blackship_body_width + blackship_body_height*blackship_body_height)}"
+                iyy="${(1.0/3.0)*blackship_body_weight*(blackship_body_height*blackship_body_height + blackship_body_depth*blackship_body_depth)}"
+                izz="${(1.0/3.0)*blackship_body_weight*(blackship_body_depth*blackship_body_depth + blackship_body_width*blackship_body_width)}"
+                ixy="0.0" ixz="0.0" iyz="0.0"/>
+    </property>
+
+    <property name="blackship_wheel_weight" value="0.8"/>
+    <property name="blackship_wheel_inertia">
+        <inertia
+                ixx="${(1.0/4.0)*blackship_wheel_weight*(blackship_wheel_radius*blackship_wheel_radius + (1.0/3.0)*blackship_wheel_width*blackship_wheel_width)}"
+                iyy="${(1.0/4.0)*blackship_wheel_weight*(blackship_wheel_radius*blackship_wheel_radius + (1.0/3.0)*blackship_wheel_width*blackship_wheel_width)}"
+                izz="${(1.0/2.0)*blackship_wheel_weight*(blackship_wheel_radius*blackship_wheel_radius)}"
+                ixy="0.0" ixz="0.0" iyz="0.0"/>
+    </property>
 
 
 </robot>

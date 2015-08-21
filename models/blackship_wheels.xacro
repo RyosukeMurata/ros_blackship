@@ -24,6 +24,18 @@
                     <color rgba="0.1 0.1 0.1 1"/>
                 </material>
             </visual>
+            <collision>
+                <origin rpy="${DEG2RAD*90} 0 0" xyz="0 0 0"/>
+                <geometry>
+                    <cylinder radius="${blackship_wheel_radius}"
+                              length="${blackship_wheel_width}"/>
+                </geometry>
+            </collision>
+            <inertial>
+                <origin rpy="${DEG2RAD*90} 0 0" xyz="0 0 0"/>
+                <mass value="${blackship_wheel_weight}"/>
+                <xacro:insert_block name="blackship_wheel_inertia"/>
+            </inertial>
         </link>
 
         <joint name="${joint_blackship_wheel}_${suffix}_2" type="fixed">

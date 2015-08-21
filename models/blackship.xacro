@@ -24,6 +24,17 @@
                     <color rgba="0.2 0.2 0.2 1"/>
                 </material>
             </visual>
+            <collision>
+                <origin xyz="0 0 0" rpy="0 0 0"/>
+                <geometry>
+                    <box size="${blackship_body_depth} ${blackship_body_width} ${blackship_body_height}"/>
+                </geometry>
+            </collision>
+            <inertial>
+                <origin xyz="0 0 0" rpy="0 0 0"/>
+                <mass value="${blackship_body_weight}"/>
+                <xacro:insert_block name="blackship_body_inertia"/>
+            </inertial>
         </link>
 
         <xacro:blackship_wheels
