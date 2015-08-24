@@ -114,7 +114,6 @@ add_executable(ros_blackship_node
   src/CBlackship.cpp
   src/bs_if.cpp
   src/serial.cpp
-  src/bs_gazebo_plugin.cpp
 )
 
 ## Add cmake target dependencies of the executable/library
@@ -173,3 +172,26 @@ target_link_libraries(ros_blackship_node
 
 ## Add folders to be run by python nosetests
 # catkin_add_nosetests(test)
+
+
+
+
+
+########################
+## For gazebo plugins ##
+########################
+
+find_package(Boost REQUIRED COMPONENTS system)
+include_directories(${Boost_INCLUDE_DIRS})
+link_directories(${Boost_LIBRARY_DIRS})
+
+include (FindPkgConfig)
+if (PKG_CONFIG_FOUND)
+  pkg_check_modules(GAZEBO gazebo)
+endif()
+include_directories(${GAZEBO_INCLUDE_DIRS})
+link_directories(${GAZEBO_LIBRARY_DIRS})
+
+add_library(gazebo_blackship SHARED src/bs_gazebo_plugin.cpp)
+target_link_libraries(gazebo_blackship ${GAZEBO_LIBRARIES} ${Boost_LIBRARIES})
+
