@@ -9,7 +9,7 @@ See the files LICENSE.TXT and LICENSE-BSD.TXT for more details.
 ************************************************************************************/
 
 
-#include "ros_blackship/bs_if.h"
+#include "bs_controller/bs_if.h"
 
 CBlackshipIF::CBlackshipIF() {
     prevr = prevl = 0;

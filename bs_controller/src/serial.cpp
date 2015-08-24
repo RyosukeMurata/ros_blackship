@@ -1,6 +1,6 @@
 // Myserial.cpp : 実装ファイル
 //
-#include "ros_blackship/serial.h"
+#include "bs_controller/serial.h"
 
 // CSerial
 CSerial::CSerial() {

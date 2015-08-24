@@ -1,6 +1,6 @@
 
 #include <boost/thread.hpp>
-#include <gazebo_blackship/bs_gazebo_plugin.h>
+#include <bs_simulator/bs_gazebo_plugin.h>
 #include <ros/time.h>
 
 using namespace gazebo;
