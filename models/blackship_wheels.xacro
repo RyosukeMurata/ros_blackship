@@ -8,10 +8,11 @@
                  params="parent_link suffix *origin">
 
         <joint name="${joint_blackship_wheel}_${suffix}" type="continuous">
-            <axis xyz="0 1 0"/>
+            <axis xyz="0 1 0" rpy="0 0 0"/>
             <insert_block name="origin"/>
             <parent link="${parent_link}"/>
             <child link="${link_blackship_wheel}_1_${suffix}"/>
+            <joint_properties damping="0.0" friction="0.0"/>
         </joint>
 
         <link name="${link_blackship_wheel}_1_${suffix}">

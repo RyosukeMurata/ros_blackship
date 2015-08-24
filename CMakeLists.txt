@@ -15,6 +15,7 @@ find_package(catkin REQUIRED COMPONENTS
   tf2
   urdf
   xacro
+  gazebo_ros
 )
 
 ## System dependencies are found with CMake's conventions
@@ -90,7 +91,7 @@ catkin_package(
  INCLUDE_DIRS include
 #  LIBRARIES ros_blackship
  CATKIN_DEPENDS geometry_msgs nav_msgs roscpp rospy sensor_msgs std_msgs tf tf2 urdf xacro
-#  DEPENDS system_lib
+ DEPENDS roscpp gazebo_ros
 )
 
 ###########
@@ -181,17 +182,10 @@ target_link_libraries(ros_blackship_node
 ## For gazebo plugins ##
 ########################
 
-find_package(Boost REQUIRED COMPONENTS system)
-include_directories(${Boost_INCLUDE_DIRS})
-link_directories(${Boost_LIBRARY_DIRS})
-
-include (FindPkgConfig)
-if (PKG_CONFIG_FOUND)
-  pkg_check_modules(GAZEBO gazebo)
-endif()
-include_directories(${GAZEBO_INCLUDE_DIRS})
+find_package(gazebo REQUIRED)
 link_directories(${GAZEBO_LIBRARY_DIRS})
+include_directories(${Boost_INCLUDE_DIR} ${catkin_INCLUDE_DIRS} ${GAZEBO_INCLUDE_DIRS})
 
 add_library(gazebo_blackship SHARED src/bs_gazebo_plugin.cpp)
-target_link_libraries(gazebo_blackship ${GAZEBO_LIBRARIES} ${Boost_LIBRARIES})
+target_link_libraries(gazebo_blackship ${GAZEBO_LIBRARIES} ${catkin_LIBRARIES})
 

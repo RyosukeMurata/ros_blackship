@@ -35,14 +35,14 @@ void BlackshipPlugin::Load(physics::ModelPtr _parent, sdf::ElementPtr _sdf )
   this->model_ = _parent;
   this->world_ = this->model_->GetWorld();
 
-  this->node_namespace_ = getSDFElement(_sdf, "robotNamespace", std::string("")) + "/";
+  this->node_namespace_ = getSDFElement(_sdf, "robotNamespace", std::string(""));
   std::string fl_joint_name = getSDFElement(_sdf, "frontLeftWheelJoint", std::string("joint_blackship_wheel_frontleft"));
   std::string fr_joint_name = getSDFElement(_sdf, "frontRightWheelJoint", std::string("joint_blackship_wheel_frontright"));
   std::string rl_joint_name = getSDFElement(_sdf, "rearLeftWheelJoint", std::string("joint_blackship_wheel_rearleft"));
   std::string rr_joint_name = getSDFElement(_sdf, "rearRightWheelJoint",std::string("joint_blackship_wheel_rearright"));
   wheel_torque_ = getSDFElement(_sdf, "wheelTorque", 15.0);
   wheel_radius_ = getSDFElement(_sdf, "wheelRadius", 0.160);
-  wheel_track_ = getSDFElement(_sdf, "wheelRadius", 0.340);
+  wheel_track_ = getSDFElement(_sdf, "wheelTrack", 0.340);
 
   // Get the name of the parent model
   std::string modelName = _sdf->GetParent()->Get<std::string>("name");
