@@ -1,0 +1,57 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+    <xacro:include filename="$(find bs_model)/models/property.xacro"/>
+    <xacro:include filename="$(find bs_model)/models/config.xacro"/>
+
+    <gazebo>
+        <plugin name="blackship_controller" filename="libbs_simulator.so">
+            <!--<alwaysOn>true</alwaysOn>-->
+            <updateRate>100.0</updateRate>
+            <robotNamespace>/blackship</robotNamespace>
+            <robotParam>/robot_description</robotParam>
+            <robotSimType>gazebo_ros_control/DefaultRobotHWSim</robotSimType>
+            <!--<frontLeftWheelJoint>joint_blackship_wheel_frontleft</frontLeftWheelJoint>-->
+            <!--<frontRightWheelJoint>joint_blackship_wheel_frontright</frontRightWheelJoint>-->
+            <!--<rearLeftWheelJoint>joint_blackship_wheel_rearleft</rearLeftWheelJoint>-->
+            <!--<rearRightWheelJoint>joint_blackship_wheel_rearright</rearRightWheelJoint>-->
+            <wheelRadius>${blackship_wheel_radius}</wheelRadius>
+            <wheelTrack>${blackship_wheel_track}</wheelTrack>
+            <wheelTorque>1000</wheelTorque>
+        </plugin>
+    </gazebo>
+
+    <!--===================================================-->
+    <!--===================================================-->
+    <!--===================================================-->
+
+
+    <!--http://cir-kit.github.io/blog/2015/02/17/gazebo-urdf-in-gazebo/-->
+    <gazebo reference="${link_blackship_wheel}_1">
+      <mu1 value="1.0" />
+      <mu2 value="1.0" />
+      <kp value="1000000000.0" />
+      <kd value="1.0" />
+      <fdir1 value="1 0 0" />
+      <material>Gazebo/Grey</material>
+      <turnGravityOff>false</turnGravityOff>
+      <selfCollide>true</selfCollide>
+    </gazebo>
+
+
+    <gazebo reference="${link_blackship_wheel}_2">
+        <material>Blue</material>
+      <turnGravityOff>false</turnGravityOff>
+    </gazebo>
+
+    <gazebo reference="${link_blackship_body}">
+        <material>Gazebo/Grey</material>
+        <gravity>true</gravity>
+        <maxVel>100.0</maxVel>
+        <minDepth>0.1</minDepth>
+        <selfCollide>true</selfCollide>
+        <!--<maxContacts>1</maxContacts>-->
+        <laserRetro>1.0</laserRetro>
+    </gazebo>
+
+
+</robot>

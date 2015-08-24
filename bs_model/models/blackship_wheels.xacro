@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
-    <xacro:include filename="$(find ros_blackship)/models/define.xacro"/>
-    <xacro:include filename="$(find ros_blackship)/models/config.xacro"/>
-    <xacro:include filename="$(find ros_blackship)/models/property.xacro"/>
+    <xacro:include filename="$(find bs_model)/models/define.xacro"/>
+    <xacro:include filename="$(find bs_model)/models/config.xacro"/>
+    <xacro:include filename="$(find bs_model)/models/property.xacro"/>
 
     <xacro:macro name="blackship_wheel"
                  params="parent_link suffix *origin">
@@ -13,6 +13,7 @@
             <parent link="${parent_link}"/>
             <child link="${link_blackship_wheel}_1_${suffix}"/>
             <joint_properties damping="0.0" friction="0.0"/>
+            <limit effort="100" velocity="100"/>
         </joint>
 
         <link name="${link_blackship_wheel}_1_${suffix}">
@@ -40,7 +41,8 @@
             </inertial>
         </link>
 
-        <joint name="${joint_blackship_wheel}_2_${suffix}" type="fixed">
+        <joint name="${joint_blackship_wheel}_2_${suffix}" type="continuous">
+            <axis xyz="0 1 0" rpy="0 0 0"/>
             <origin rpy="0 0 0" xyz="0 0 0"/>
             <parent link="${link_blackship_wheel}_1_${suffix}"/>
             <child link="${link_blackship_wheel}_2_${suffix}"/>

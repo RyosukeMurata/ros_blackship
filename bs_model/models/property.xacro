@@ -33,7 +33,7 @@
                 ixy="0.0" ixz="0.0" iyz="0.0"/>
     </property>
 
-    <property name="blackship_wheel_weight" value="3"/>
+    <property name="blackship_wheel_weight" value="1"/>
     <property name="blackship_wheel_inertia">
         <inertia
                 ixx="${(1.0/4.0)*blackship_wheel_weight*(blackship_wheel_radius*blackship_wheel_radius + (1.0/3.0)*blackship_wheel_width*blackship_wheel_width)}"

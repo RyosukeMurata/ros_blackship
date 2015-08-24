@@ -1,6 +1,10 @@
 <?xml version="1.0"?>
 <robot name="blackship" xmlns:xacro="http://www.ros.org/wiki/xacro">
-    <xacro:include filename="$(find ros_blackship)/models/blackship.xacro"/>
+    <xacro:include filename="$(find bs_model)/models/blackship.xacro"/>
+
+    <xacro:if value="$(arg is_gazebo)">
+        <xacro:include filename="$(find bs_simulator)/gazebo/blackship.gazebo"/>
+    </xacro:if>
 
     <link name="blackship_root"/>
     <xacro:blackship parent_link="blackship_root"/>

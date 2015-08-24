@@ -10,6 +10,7 @@
 #include "gazebo/common/Events.hh"
 
 #include <geometry_msgs/TwistStamped.h>
+#include <sensor_msgs/JointState.h>
 #include <ros/ros.h>
 
 // Custom Callback Queue
@@ -28,13 +29,14 @@ namespace gazebo
 
     class BlackshipWheel{
     public:
-        BlackshipWheel():is_initialized(false){};
-        ~BlackshipWheel(){};
+        BlackshipWheel():is_initialized(false){}
+        ~BlackshipWheel(){}
         void initialize(physics::ModelPtr _model, std::string _joint_name){
             model_ = _model;
-            axis_joint_ = model_->GetJoint(_joint_name);
+            joint_name_ = _joint_name;
+            axis_joint_ = model_->GetJoint(joint_name_);
             is_initialized = true;
-        };
+        }
         void update(double _ang_vel, double _torque ){
             if (is_initialized){
                 axis_joint_->SetVelocity( 0, _ang_vel);
@@ -42,11 +44,15 @@ namespace gazebo
             } else {
                 std::cout<<"Not initialized!" << std::endl;
             }
-        };
+        }
+        float joint_pos(){return axis_joint_->GetAngle(0).Radian();}
+        float joint_vel(){return axis_joint_->GetVelocity(0);}
+        std::string joint_name(){return joint_name_;}
     private:
         bool is_initialized;
         physics::JointPtr axis_joint_;
         physics::ModelPtr model_;
+        std::string joint_name_;
     };
 
 
@@ -72,7 +78,7 @@ namespace gazebo
           } else{
               return default_element;
           }
-      };
+      }
 
       BlackshipWheel wheel_fl_;
       BlackshipWheel wheel_fr_;
@@ -87,6 +93,8 @@ namespace gazebo
 
       ros::NodeHandle *rosnode_;
       ros::Subscriber drive_sub_;
+      ros::Publisher encoder_pub_;
+      ros::Publisher joint_state_pub_;
 
       physics::WorldPtr world_;
       physics::ModelPtr model_;
@@ -94,6 +102,7 @@ namespace gazebo
 
       /// Speeds of the wheels
       WheelAngularVelocity wheel_ang_vel_;
+      sensor_msgs::JointState js_;
 
       // Simulation time of the last update
       common::Time prev_update_time_;

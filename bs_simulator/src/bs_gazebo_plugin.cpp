@@ -53,6 +53,8 @@ void BlackshipPlugin::Load(physics::ModelPtr _parent, sdf::ElementPtr _sdf )
   this->wheel_rl_.initialize(this->model_, rl_joint_name);
   this->wheel_rr_.initialize(this->model_, rr_joint_name);
 
+
+
   prev_update_time_ = 0;
   last_cmd_vel_time_ = 0;
 
@@ -76,6 +78,8 @@ void BlackshipPlugin::UpdateChild()
   wheel_fr_.update(wheel_ang_vel_.front_right, wheel_torque_);
   wheel_rl_.update(wheel_ang_vel_.rear_left, wheel_torque_);
   wheel_rr_.update(wheel_ang_vel_.rear_right, wheel_torque_);
+
+
 
   // Timeout if we haven't received a cmd in <0.1 s
   common::Time time_since_last_cmd = time_now - last_cmd_vel_time_;

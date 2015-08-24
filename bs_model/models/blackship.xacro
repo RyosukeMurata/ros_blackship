@@ -1,10 +1,10 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
-    <xacro:include filename="$(find ros_blackship)/models/define.xacro"/>
-    <xacro:include filename="$(find ros_blackship)/models/config.xacro"/>
-    <xacro:include filename="$(find ros_blackship)/models/property.xacro"/>
-    <xacro:include filename="$(find ros_blackship)/models/blackship_wheels.xacro"/>
-    <xacro:include filename="$(find ros_blackship)/models/blackship_topboard.xacro"/>
+    <xacro:include filename="$(find bs_model)/models/define.xacro"/>
+    <xacro:include filename="$(find bs_model)/models/config.xacro"/>
+    <xacro:include filename="$(find bs_model)/models/property.xacro"/>
+    <xacro:include filename="$(find bs_model)/models/blackship_wheels.xacro"/>
+    <xacro:include filename="$(find bs_model)/models/blackship_topboard.xacro"/>
 
     <xacro:macro name="blackship" params="parent_link">
         <joint name="${joint_blackship_body}" type="fixed">
