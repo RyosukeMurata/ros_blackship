@@ -114,6 +114,7 @@ add_executable(ros_blackship_node
   src/CBlackship.cpp
   src/bs_if.cpp
   src/serial.cpp
+  src/bs_gazebo_plugin.cpp
 )
 
 ## Add cmake target dependencies of the executable/library

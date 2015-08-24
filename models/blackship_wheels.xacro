@@ -7,13 +7,14 @@
     <xacro:macro name="blackship_wheel"
                  params="parent_link suffix *origin">
 
-        <joint name="${joint_blackship_wheel}_${suffix}" type="fixed">
+        <joint name="${joint_blackship_wheel}_${suffix}" type="continuous">
+            <axis xyz="0 1 0"/>
             <insert_block name="origin"/>
             <parent link="${parent_link}"/>
-            <child link="${link_blackship_wheel}_${suffix}"/>
+            <child link="${link_blackship_wheel}_1_${suffix}"/>
         </joint>
 
-        <link name="${link_blackship_wheel}_${suffix}">
+        <link name="${link_blackship_wheel}_1_${suffix}">
             <visual>
                 <origin rpy="${DEG2RAD*90} 0 0" xyz="0 0 0"/>
                 <geometry>
@@ -38,13 +39,13 @@
             </inertial>
         </link>
 
-        <joint name="${joint_blackship_wheel}_${suffix}_2" type="fixed">
+        <joint name="${joint_blackship_wheel}_2_${suffix}" type="fixed">
             <origin rpy="0 0 0" xyz="0 0 0"/>
-            <parent link="${link_blackship_wheel}_${suffix}"/>
-            <child link="${link_blackship_wheel}_${suffix}_2"/>
+            <parent link="${link_blackship_wheel}_1_${suffix}"/>
+            <child link="${link_blackship_wheel}_2_${suffix}"/>
         </joint>
 
-        <link name="${link_blackship_wheel}_${suffix}_2">
+        <link name="${link_blackship_wheel}_2_${suffix}">
             <visual>
                 <origin rpy="${DEG2RAD*90} 0 0" xyz="0 0 0"/>
                 <geometry>
