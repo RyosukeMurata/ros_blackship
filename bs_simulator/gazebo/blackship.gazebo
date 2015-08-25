@@ -5,7 +5,7 @@
 
     <gazebo>
         <plugin name="blackship_controller" filename="libbs_simulator.so">
-            <!--<alwaysOn>true</alwaysOn>-->
+            <alwaysOn>true</alwaysOn>
             <updateRate>100.0</updateRate>
             <robotNamespace>/blackship</robotNamespace>
             <robotParam>/robot_description</robotParam>
