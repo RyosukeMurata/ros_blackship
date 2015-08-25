@@ -80,18 +80,18 @@ namespace gazebo
               return default_element;
           }
       }
-//      /// HACK
-//      void js_push_back(BlackshipWheel _wheel){
-//          js_.name.push_back(_wheel.joint_name());
-//          js_.position.push_back(_wheel.joint_pos());
-//          js_.velocity.push_back(_wheel.joint_vel());
-//      }
-//      /// HACK
-//      void js_update(int idx, BlackshipWheel _wheel){
-//          js_.name[idx] = _wheel.joint_name();
-//          js_.position[idx] = _wheel.joint_pos();
-//          js_.velocity[idx] = _wheel.joint_vel();
-//      }
+      /// HACK
+      void js_push_back(BlackshipWheel _wheel){
+          js_.name.push_back(_wheel.joint_name());
+          js_.position.push_back(_wheel.joint_pos());
+          js_.velocity.push_back(_wheel.joint_vel());
+      }
+      /// HACK
+      void js_update(int idx, BlackshipWheel _wheel){
+          js_.name[idx] = _wheel.joint_name();
+          js_.position[idx] = _wheel.joint_pos();
+          js_.velocity[idx] = _wheel.joint_vel();
+      }
 
       BlackshipWheel wheel_fl_;
       BlackshipWheel wheel_fr_;
@@ -107,7 +107,7 @@ namespace gazebo
       ros::NodeHandle *rosnode_;
       ros::Subscriber drive_sub_;
 //      ros::Publisher encoder_pub_;
-//      ros::Publisher joint_state_pub_;
+      ros::Publisher joint_state_pub_;
 
       physics::WorldPtr world_;
       physics::ModelPtr model_;
@@ -115,7 +115,7 @@ namespace gazebo
 
       /// Speeds of the wheels
       WheelAngularVelocity wheel_ang_vel_;
-//      sensor_msgs::JointState js_;
+      sensor_msgs::JointState js_;
 
       // Simulation time of the last update
       common::Time prev_update_time_;

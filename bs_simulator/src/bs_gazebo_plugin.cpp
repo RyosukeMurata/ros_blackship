@@ -17,7 +17,7 @@ BlackshipPlugin::BlackshipPlugin():
 
     drive_sub_ = rosnode_->subscribe("cmd_vel", 1, &BlackshipPlugin::OnDrive, this );
 //    encoder_pub_  = rosnode_->advertise<sensor_msgs::JointState>("encoders", 1);
-//    joint_state_pub_ = rosnode_->advertise<sensor_msgs::JointState>("joint_states", 1);
+    joint_state_pub_ = rosnode_->advertise<sensor_msgs::JointState>("joint_states", 1);
 }
 
 BlackshipPlugin::~BlackshipPlugin()
@@ -55,10 +55,10 @@ void BlackshipPlugin::Load(physics::ModelPtr _parent, sdf::ElementPtr _sdf )
   this->wheel_rl_.initialize(this->model_, rl_joint_name);
   this->wheel_rr_.initialize(this->model_, rr_joint_name);
 
-//  js_push_back(wheel_fl_);
-//  js_push_back(wheel_fr_);
-//  js_push_back(wheel_rl_);
-//  js_push_back(wheel_rr_);
+  js_push_back(wheel_fl_);
+  js_push_back(wheel_fr_);
+  js_push_back(wheel_rl_);
+  js_push_back(wheel_rr_);
 
   prev_update_time_ = 0;
   last_cmd_vel_time_ = 0;
@@ -84,13 +84,13 @@ void BlackshipPlugin::UpdateChild()
   wheel_rl_.update(wheel_ang_vel_.rear_left, wheel_torque_);
   wheel_rr_.update(wheel_ang_vel_.rear_right, wheel_torque_);
 
-//  js_update(0, wheel_fl_);
-//  js_update(1, wheel_fr_);
-//  js_update(2, wheel_rl_);
-//  js_update(3, wheel_rr_);
+  js_update(0, wheel_fl_);
+  js_update(1, wheel_fr_);
+  js_update(2, wheel_rl_);
+  js_update(3, wheel_rr_);
 
 //  encoder_pub_.publish( js_ );
-//  joint_state_pub_.publish( js_ );
+  joint_state_pub_.publish( js_ );
 
   // Timeout if we haven't received a cmd in <0.1 s
   common::Time time_since_last_cmd = time_now - last_cmd_vel_time_;
