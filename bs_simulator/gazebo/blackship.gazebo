@@ -10,10 +10,10 @@
             <robotNamespace>/blackship</robotNamespace>
             <robotParam>/robot_description</robotParam>
             <robotSimType>gazebo_ros_control/DefaultRobotHWSim</robotSimType>
-            <!--<frontLeftWheelJoint>joint_blackship_wheel_frontleft</frontLeftWheelJoint>-->
-            <!--<frontRightWheelJoint>joint_blackship_wheel_frontright</frontRightWheelJoint>-->
-            <!--<rearLeftWheelJoint>joint_blackship_wheel_rearleft</rearLeftWheelJoint>-->
-            <!--<rearRightWheelJoint>joint_blackship_wheel_rearright</rearRightWheelJoint>-->
+            <frontLeftWheelJoint>joint_blackship_wheel_frontleft</frontLeftWheelJoint>
+            <frontRightWheelJoint>joint_blackship_wheel_frontright</frontRightWheelJoint>
+            <rearLeftWheelJoint>joint_blackship_wheel_rearleft</rearLeftWheelJoint>
+            <rearRightWheelJoint>joint_blackship_wheel_rearright</rearRightWheelJoint>
             <wheelRadius>${blackship_wheel_radius}</wheelRadius>
             <wheelTrack>${blackship_wheel_track}</wheelTrack>
             <wheelTorque>1000</wheelTorque>

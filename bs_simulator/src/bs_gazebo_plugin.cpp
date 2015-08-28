@@ -8,17 +8,7 @@ using namespace gazebo;
 
 BlackshipPlugin::BlackshipPlugin():
     wheel_fl_(), wheel_fr_(), wheel_rl_(), wheel_rr_()
-{
-    // Initialize the ROS node and subscribe to cmd_vel
-    int argc = 0;
-    char** argv = NULL;
-    ros::init(argc, argv, "gazebo_blackship", ros::init_options::NoSigintHandler|ros::init_options::AnonymousName);
-    rosnode_ = new ros::NodeHandle( node_namespace_ );
-
-    drive_sub_ = rosnode_->subscribe("cmd_vel", 1, &BlackshipPlugin::OnDrive, this );
-//    encoder_pub_  = rosnode_->advertise<sensor_msgs::JointState>("encoders", 1);
-    joint_state_pub_ = rosnode_->advertise<sensor_msgs::JointState>("joint_states", 1);
-}
+{}
 
 BlackshipPlugin::~BlackshipPlugin()
 {
@@ -49,6 +39,16 @@ void BlackshipPlugin::Load(physics::ModelPtr _parent, sdf::ElementPtr _sdf )
   // Get the name of the parent model
   std::string modelName = _sdf->GetParent()->Get<std::string>("name");
   gzdbg << "plugin model name: " << modelName << "\n";
+
+
+  // Initialize the ROS node and subscribe to cmd_vel
+  int argc = 0;
+  char** argv = NULL;
+  ros::init(argc, argv, "gazebo_blackship", ros::init_options::NoSigintHandler|ros::init_options::AnonymousName);
+  rosnode_ = new ros::NodeHandle( node_namespace_ );
+
+  drive_sub_ = rosnode_->subscribe("cmd_vel", 1, &BlackshipPlugin::OnDrive, this );
+  joint_state_pub_ = rosnode_->advertise<sensor_msgs::JointState>("encoder", 1);
 
   this->wheel_fl_.initialize(this->model_, fl_joint_name);
   this->wheel_fr_.initialize(this->model_, fr_joint_name);
@@ -88,9 +88,7 @@ void BlackshipPlugin::UpdateChild()
   js_update(1, wheel_fr_);
   js_update(2, wheel_rl_);
   js_update(3, wheel_rr_);
-
-//  encoder_pub_.publish( js_ );
-  joint_state_pub_.publish( js_ );
+  joint_state_pub_.publish( encoder_js_ );
 
   // Timeout if we haven't received a cmd in <0.1 s
   common::Time time_since_last_cmd = time_now - last_cmd_vel_time_;
