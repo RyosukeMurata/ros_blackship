@@ -41,7 +41,7 @@
             </inertial>
         </link>
 
-        <joint name="${joint_blackship_wheel}_2_${suffix}" type="continuous">
+        <joint name="${joint_blackship_wheel}_2_${suffix}" type="fixed">
             <axis xyz="0 1 0" rpy="0 0 0"/>
             <origin rpy="0 0 0" xyz="0 0 0"/>
             <parent link="${link_blackship_wheel}_1_${suffix}"/>
