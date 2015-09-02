@@ -28,6 +28,7 @@ void BlackshipPlugin::Load(physics::ModelPtr _parent, sdf::ElementPtr _sdf )
   this->world_ = this->model_->GetWorld();
 
   this->node_namespace_ = getSDFElement(_sdf, "robotNamespace", std::string(""));
+  this->input_vel_topic_name_ = getSDFElement(_sdf, "inputVelTopicName", std::string("cmd_vel"));
   std::string fl_joint_name = getSDFElement(_sdf, "frontLeftWheelJoint", std::string("joint_blackship_wheel_frontleft"));
   std::string fr_joint_name = getSDFElement(_sdf, "frontRightWheelJoint", std::string("joint_blackship_wheel_frontright"));
   std::string rl_joint_name = getSDFElement(_sdf, "rearLeftWheelJoint", std::string("joint_blackship_wheel_rearleft"));
@@ -47,7 +48,7 @@ void BlackshipPlugin::Load(physics::ModelPtr _parent, sdf::ElementPtr _sdf )
   ros::init(argc, argv, "gazebo_blackship", ros::init_options::NoSigintHandler|ros::init_options::AnonymousName);
   rosnode_ = new ros::NodeHandle( node_namespace_ );
 
-  drive_sub_ = rosnode_->subscribe("cmd_vel", 1, &BlackshipPlugin::OnDrive, this );
+  drive_sub_ = rosnode_->subscribe(this->input_vel_topic_name_, 1, &BlackshipPlugin::OnDrive, this );
   joint_state_pub_ = rosnode_->advertise<sensor_msgs::JointState>("encoder", 1);
 
   this->wheel_fl_.initialize(this->model_, fl_joint_name);

@@ -8,6 +8,7 @@
             <alwaysOn>true</alwaysOn>
             <updateRate>100.0</updateRate>
             <robotNamespace>/blackship</robotNamespace>
+            <!--<inputVelTopicName>/cmd_vel</inputVelTopicName>-->
             <robotParam>/robot_description</robotParam>
             <robotSimType>gazebo_ros_control/DefaultRobotHWSim</robotSimType>
             <frontLeftWheelJoint>joint_blackship_wheel_frontleft</frontLeftWheelJoint>
@@ -39,7 +40,7 @@
 
 
     <gazebo reference="${link_blackship_wheel}_2">
-        <material>Blue</material>
+        <material>Gazebo/Blue</material>
       <turnGravityOff>false</turnGravityOff>
     </gazebo>
 
