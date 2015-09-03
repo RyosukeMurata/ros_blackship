@@ -136,6 +136,10 @@ include_directories(
 add_library(bs_simulator
   src/bs_gazebo_plugin.cpp
 )
+add_library(bs_simulator_test
+  src/bs_gazebo_plugin_test.cpp
+)
+
 
 ## Add cmake target dependencies of the library
 ## as an example, code may need to be generated before libraries
@@ -153,6 +157,11 @@ add_library(bs_simulator
 target_link_libraries(bs_simulator
   ${PROJECT_NAME} 
   ${catkin_LIBRARIES} 
+  ${GAZEBO_LIBRARIES}
+)
+target_link_libraries(bs_simulator_test
+  ${PROJECT_NAME}
+  ${catkin_LIBRARIES}
   ${GAZEBO_LIBRARIES}
 )
 
