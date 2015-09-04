@@ -49,6 +49,7 @@ namespace gazebo
 
       ros::NodeHandle *rosnode_;
       ros::Subscriber drive_sub_;
+      ros::Publisher joint_state_pub_;
 
       physics::WorldPtr world_;
       physics::ModelPtr model_;
@@ -56,14 +57,11 @@ namespace gazebo
 
       math::Vector3 body_linear_vel_;
       math::Vector3 body_angular_vel_;
-      physics::JointPtr wheel_fl_joint_;
-      physics::JointPtr wheel_fr_joint_;
-      physics::JointPtr wheel_rl_joint_;
-      physics::JointPtr wheel_rr_joint_;
 
       // Simulation time of the last update
       common::Time prev_update_time_;
       common::Time last_cmd_vel_time_;
+      sensor_msgs::JointState encoder_js_;
 
       void spin();
       boost::thread *spinner_thread_;
