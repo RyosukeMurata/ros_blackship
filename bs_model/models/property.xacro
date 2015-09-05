@@ -24,7 +24,7 @@
 
     <!--==========================================================-->
 
-    <property name="blackship_body_weight" value="20"/>
+    <property name="blackship_body_weight" value="200"/>
     <property name="blackship_body_inertia">
         <inertia
                 ixx="${(1.0/3.0)*blackship_body_weight*(blackship_body_width*blackship_body_width + blackship_body_height*blackship_body_height)}"
