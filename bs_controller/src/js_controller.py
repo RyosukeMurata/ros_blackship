@@ -5,7 +5,7 @@ import rospy
 from geometry_msgs.msg import TwistStamped
 from sensor_msgs.msg import Joy
 
-REMAPPABLE_NODE_NAME = 'js_commander1'
+REMAPPABLE_NODE_NAME = 'js_commander'
 PARAM_NAME_TWISTSTAMPED_TOPIC = '/blackship_input'
 PARAM_NAME_JOYSTICK_TOPIC = '/joystick_topic'
 
@@ -13,23 +13,33 @@ PARAM_NAME_JOYSTICK_TOPIC = '/joystick_topic'
 class JoyStickTwistStampedPublisher(object):
     def __init__(self):
         self._joy_data = Joy()
-        self._twiststamped = TwistStamped()
-        self._publisher = rospy.Publisher(rospy.get_param(PARAM_NAME_TWISTSTAMPED_TOPIC),
-                                          TwistStamped, queue_size=1)
+        self._twist_stamped = TwistStamped()
+        self._publisher = rospy.Publisher('bs_input', TwistStamped, queue_size=1)
         self.is_activated = False
+        self._scale_v = rospy.get_param('~scale_v')
+        self._scale_w = rospy.get_param('~scale_w')
 
     def activate(self):
-        rospy.Subscriber(rospy.get_param(PARAM_NAME_JOYSTICK_TOPIC, default='joy_node'),
-                         Joy, self._joy_callback)
+        rospy.Subscriber('joy', Joy, self._joy_callback)
         self.is_activated = True
 
     def _joy_callback(self, joy_data):
-        self._joy_data = joy_data
+        self._update_scales([joy_data.buttons[0], joy_data.buttons[2],
+                             joy_data.buttons[3], joy_data.buttons[1]])
+        self._update_inputs(joy_data.axes[1], joy_data.axes[0])
+
+    def _update_scales(self, btns):
+        v_up = 0.01 if btns[0] == 1 else -0.01 if btns[1] == 1 else 0.0
+        w_up = 0.01 if btns[2] == 1 else -0.01 if btns[3] == 1 else 0.0
+        self._scale_v += v_up
+        self._scale_w += w_up
+
+    def _update_inputs(self, up_down_axis, left_right_axis):
+        self._twist_stamped.twist.linear.x = self._scale_v * up_down_axis
+        self._twist_stamped.twist.angular.z = self._scale_w * left_right_axis
 
     def publish_twiststamped(self):
-        self._twiststamped.twist.linear.x = self._joy_data.axes[1]
-        self._twiststamped.twist.angular.z = self._joy_data.axes[0]
-        self._publisher.publish(self._twiststamped)
+        self._publisher.publish(self._twist_stamped)
 
 
 # -------------------------------------------------------------------------

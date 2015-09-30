@@ -2,7 +2,7 @@
 #include "bs_controller/CBlackship.h"
 
 CBlackship::CBlackship(const ros::NodeHandle& nh) :
-    mNodeHandle(nh, "bs_controller") {
+    mNodeHandle(nh) {
 
     mInputVel = 0.0;
     mInputAVel = 0.0;
@@ -15,7 +15,9 @@ CBlackship::~CBlackship() {
 }
 
 bool CBlackship::initialize() {
-    return mBsIF.blackship_open(bs::STR_PORT);
+    std::string portStr;
+    const char* portChar = ros::param::get("/port_str", portStr) ? portStr.c_str() : bs::STR_PORT;
+    return mBsIF.blackship_open(portChar);
 }
 
 void CBlackship::inputCallback(const geometry_msgs::TwistStamped::ConstPtr& _input) {
@@ -69,7 +71,7 @@ bool CBlackship::setStopFlagServiceHandler(std_srvs::Trigger::Request& req,
 }
 
 bool CBlackship::setStartFlagServiceHandler(std_srvs::Trigger::Request& req,
-                                           std_srvs::Trigger::Response& res) {
+                                            std_srvs::Trigger::Response& res) {
     mStopFlag = false;
     res.success = true;
     res.message = mStopFlag ? "StopFlag is true" : "StopFlag is false";

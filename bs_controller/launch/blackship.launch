@@ -1,4 +1,30 @@
 <?xml version="1.0"?>
 <launch>
-    <node name="bs_controller" pkg="bs_controller" type="bs_controller_node" output="screen"/>
+    <arg name="ns" value="blackship"/>
+    <arg name="input_twist_topic_name" value="bs_input"/>
+    <arg name="joy_topic_name" value="joy_input"/>
+    <arg name="start_service_name" value="start_service"/>
+    <arg name="stop_service_name" value="stop_service"/>
+
+    <node name="joy_node" pkg="joy" type="joy_node" output="screen">
+        <remap from="joy" to="$(arg ns)/$(arg joy_topic_name)"/>
+        <param name="dev" type="string" value="/dev/input/js0"/>
+    </node>
+
+    <node ns="$(arg ns)" name="js_commander"
+          pkg="bs_controller" type="js_controller.py" output="screen">
+        <remap from="bs_input" to="$(arg input_twist_topic_name)"/>
+        <remap from="joy" to="$(arg joy_topic_name)"/>
+        <param name="scale_v" value="0.5"/>
+        <param name="scale_w" value="1.0"/>
+    </node>
+
+    <node ns="$(arg ns)" name="bs_controller"
+          pkg="bs_controller" type="bs_controller_node" output="screen" >
+          <!--launch-prefix="sudo">-->
+        <remap from="bs_input" to="$(arg input_twist_topic_name)"/>
+        <remap from="start_service" to="$(arg start_service_name)"/>
+        <remap from="stop_service" to="$(arg stop_service_name)"/>
+        <param name="/port_str" value="/dev/ttyUSB0"/>
+    </node>
 </launch>
