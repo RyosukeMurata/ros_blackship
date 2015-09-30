@@ -15,12 +15,14 @@
 class CBlackship {
 
 public:
-    CBlackship();
+    CBlackship(const ros::NodeHandle &nh);
     ~CBlackship();
-    void run();
+    bool initialize();
+    void activate();
+    void publish_odom();
 
 private:
-    ros::NodeHandle mNode;
+    ros::NodeHandle mNodeHandle;
     ros::Subscriber mSubInput;
     //ros::Publisher mPubOdmetry;
     void inputCallback(const geometry_msgs::TwistStamped::ConstPtr& _input);
@@ -30,7 +32,6 @@ private:
     double mInputAVel;
     bool mStopFlag;
 
-    bool init();
     bool setInputFromRos(geometry_msgs::Twist _input);
     bool limitVel(double _vel, double _avel);
     void setSpeed(bool setFlag);

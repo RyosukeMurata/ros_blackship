@@ -1,0 +1,4 @@
+<?xml version="1.0"?>
+<launch>
+    <node name="bs_controller" pkg="bs_controller" type="bs_controller_node" output="screen"/>
+</launch>

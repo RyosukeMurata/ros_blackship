@@ -1,21 +1,20 @@
 
 #include "bs_controller/CBlackship.h"
 
-CBlackship::CBlackship() {
+CBlackship::CBlackship(const ros::NodeHandle& nh) :
+    mNodeHandle(nh, "bs_controller") {
 
     mInputVel = 0.0;
     mInputAVel = 0.0;
     mStopFlag = false;
     // mPubOdmetry = mNode.advertise<nav_msgs::Odometry::ConstPtr>("bs_odmetry", 100);
-    mSubInput = mNode.subscribe("bs_input", 100, &CBlackship::inputCallback, this);
-
 }
 
 CBlackship::~CBlackship() {
     mBsIF.blackship_close();
 }
 
-bool CBlackship::init() {
+bool CBlackship::initialize() {
     return mBsIF.blackship_open(bs::STR_PORT);
 }
 
@@ -51,17 +50,12 @@ void CBlackship::setSpeed(bool _setFlag) {
     }
 }
 
-
-void CBlackship::run() {
-
-    if (init()) {
-        ros::Rate loop_rate(30);
-
-        while (ros::ok()) {
-            ros::spinOnce();
-            loop_rate.sleep();
-            //TODO: get odometry data
-        }
-    }
+void CBlackship::activate() {
+    mSubInput = mNodeHandle.subscribe("bs_input", 100, &CBlackship::inputCallback, this);
 }
+
+void CBlackship::publish_odom() {
+    // TODO
+}
+
 
