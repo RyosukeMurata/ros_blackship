@@ -52,6 +52,7 @@ void CBlackship::setSpeed(bool _setFlag) {
 
 void CBlackship::activate() {
     mSubInput = mNodeHandle.subscribe("bs_input", 100, &CBlackship::inputCallback, this);
+    mStartService = mNodeHandle.advertiseService("start_service", &CBlackship::setStartFlagServiceHandler, this);
     mStopService = mNodeHandle.advertiseService("stop_service", &CBlackship::setStopFlagServiceHandler, this);
 }
 
@@ -61,9 +62,17 @@ void CBlackship::publish_odom() {
 
 bool CBlackship::setStopFlagServiceHandler(std_srvs::Trigger::Request& req,
                                            std_srvs::Trigger::Response& res) {
-    mStopFlag = !mStopFlag;
+    mStopFlag = true;
     res.success = true;
-    res.message = mStopFlag ? "true" : "false";
+    res.message = mStopFlag ? "StopFlag is true" : "StopFlag is false";
+    return true;
+}
+
+bool CBlackship::setStartFlagServiceHandler(std_srvs::Trigger::Request& req,
+                                           std_srvs::Trigger::Response& res) {
+    mStopFlag = false;
+    res.success = true;
+    res.message = mStopFlag ? "StopFlag is true" : "StopFlag is false";
     return true;
 }
 

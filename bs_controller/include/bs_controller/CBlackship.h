@@ -25,12 +25,15 @@ public:
 private:
     ros::NodeHandle mNodeHandle;
     ros::Subscriber mSubInput;
+    ros::ServiceServer mStartService;
     ros::ServiceServer mStopService;
 
     //ros::Publisher mPubOdmetry;
     void inputCallback(const geometry_msgs::TwistStamped::ConstPtr& _input);
     bool setStopFlagServiceHandler(std_srvs::Trigger::Request& req,
                                    std_srvs::Trigger::Response& res);
+    bool setStartFlagServiceHandler(std_srvs::Trigger::Request& req,
+                                       std_srvs::Trigger::Response& res);
 
     CBlackshipIF mBsIF;
     double mInputVel;
