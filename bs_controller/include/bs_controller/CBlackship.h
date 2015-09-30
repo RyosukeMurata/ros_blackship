@@ -25,7 +25,8 @@ public:
 private:
     ros::NodeHandle mNodeHandle;
     ros::Subscriber mSubInput;
-    ros::ServiceServer mStopFlagService;
+    ros::ServiceServer mStopService;
+
     //ros::Publisher mPubOdmetry;
     void inputCallback(const geometry_msgs::TwistStamped::ConstPtr& _input);
     bool setStopFlagServiceHandler(std_srvs::Trigger::Request& req,
@@ -40,6 +41,7 @@ private:
     bool limitVel(double _vel, double _avel);
     void setSpeed(bool setFlag);
 };
+
 #endif
 
 
