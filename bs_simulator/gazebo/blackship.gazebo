@@ -3,11 +3,25 @@
     <xacro:include filename="$(find bs_model)/models/property.xacro"/>
     <xacro:include filename="$(find bs_model)/models/config.xacro"/>
 
+    <!--<property name="wheel_kp" value="1.0"/>-->
+    <!--<gazebo>-->
+        <!--<plugin name="blackship_controller" filename="libbs_simulator_test.so">-->
+            <!--<alwaysOn>true</alwaysOn>-->
+            <!--<updateRate>100.0</updateRate>-->
+            <!--<robotNamespace>/blackship</robotNamespace>-->
+            <!--&lt;!&ndash;<inputVelTopicName>/cmd_vel</inputVelTopicName>&ndash;&gt;-->
+            <!--<robotParam>/robot_description</robotParam>-->
+            <!--<robotSimType>gazebo_ros_control/DefaultRobotHWSim</robotSimType>-->
+            <!--&lt;!&ndash;<controlledLink>blackship_root</controlledLink>&ndash;&gt;-->
+            <!--<controlledLink>blackship_base_for_calc</controlledLink>-->
+        <!--</plugin>-->
+    <!--</gazebo>-->
     <gazebo>
         <plugin name="blackship_controller" filename="libbs_simulator.so">
             <alwaysOn>true</alwaysOn>
             <updateRate>100.0</updateRate>
             <robotNamespace>/blackship</robotNamespace>
+            <!--<inputVelTopicName>/cmd_vel</inputVelTopicName>-->
             <robotParam>/robot_description</robotParam>
             <robotSimType>gazebo_ros_control/DefaultRobotHWSim</robotSimType>
             <frontLeftWheelJoint>joint_blackship_wheel_frontleft</frontLeftWheelJoint>
@@ -16,7 +30,7 @@
             <rearRightWheelJoint>joint_blackship_wheel_rearright</rearRightWheelJoint>
             <wheelRadius>${blackship_wheel_radius}</wheelRadius>
             <wheelTrack>${blackship_wheel_track}</wheelTrack>
-            <wheelTorque>1000</wheelTorque>
+            <wheelTorque>100000</wheelTorque>
         </plugin>
     </gazebo>
 
@@ -27,20 +41,20 @@
 
     <!--http://cir-kit.github.io/blog/2015/02/17/gazebo-urdf-in-gazebo/-->
     <gazebo reference="${link_blackship_wheel}_1">
-      <mu1 value="1.0" />
-      <mu2 value="1.0" />
-      <kp value="1000000000.0" />
-      <kd value="1.0" />
-      <fdir1 value="1 0 0" />
-      <material>Gazebo/Grey</material>
-      <turnGravityOff>false</turnGravityOff>
-      <selfCollide>true</selfCollide>
+        <!--<mu1 value="0.5"/>-->
+        <!--<mu2 value="0.5"/>-->
+        <kp value="100000000.0"/>
+        <kd value="1.0"/>
+        <fdir1 value="1 0 0"/>
+        <material>Gazebo/Grey</material>
+        <turnGravityOff>false</turnGravityOff>
+        <selfCollide>true</selfCollide>
     </gazebo>
 
 
     <gazebo reference="${link_blackship_wheel}_2">
-        <material>Blue</material>
-      <turnGravityOff>false</turnGravityOff>
+        <material>Gazebo/Blue</material>
+        <turnGravityOff>false</turnGravityOff>
     </gazebo>
 
     <gazebo reference="${link_blackship_body}">

@@ -4,10 +4,16 @@
     <xacro:include filename="$(find bs_model)/models/config.xacro"/>
     <xacro:include filename="$(find bs_model)/models/property.xacro"/>
 
+    <property name="wheel_type" value="continuous"/>
+    <!--<xacro:unless value="$(arg is_gazebo)">-->
+        <!--<property name="wheel_type" value="fixed"/>-->
+    <!--</xacro:unless>-->
+
+
     <xacro:macro name="blackship_wheel"
                  params="parent_link suffix *origin">
 
-        <joint name="${joint_blackship_wheel}_${suffix}" type="continuous">
+        <joint name="${joint_blackship_wheel}_${suffix}" type="${wheel_type}">
             <axis xyz="0 1 0" rpy="0 0 0"/>
             <insert_block name="origin"/>
             <parent link="${parent_link}"/>

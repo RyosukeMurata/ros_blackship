@@ -100,6 +100,7 @@ namespace gazebo
 
       /// Parameters
       std::string node_namespace_;
+      std::string input_vel_topic_name_;
       float wheel_radius_;
       float wheel_track_;
       float wheel_torque_;
