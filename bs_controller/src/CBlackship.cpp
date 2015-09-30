@@ -36,12 +36,12 @@ bool CBlackship::limitVel(double _vel, double _avel) {
 
 void CBlackship::setSpeed(bool _setFlag) {
 
-    double vel = !mStopFlag ? bs::MPS2BS * bs::K_SPEED * mInputVel : 0.0;
+    double vel = mStopFlag ? 0.0 : bs::MPS2BS * bs::K_SPEED * mInputVel;
     double k_slip = 1;
     if (bs::USE_SLIP) {
         k_slip = 1 / (1.0 - 2.0 * bs::K_SLIP);
     }
-    double avel = !mStopFlag ? k_slip * bs::MPS2BS * bs::K_TURN * (bs::WHEELWIDTH * 0.5 * mInputAVel) : 0.0;
+    double avel = mStopFlag ? 0.0 : k_slip * bs::MPS2BS * bs::K_TURN * (bs::WHEELWIDTH * 0.5 * mInputAVel);
 
     if (_setFlag) {
         int leftWheelVel = (int)myUtils::limitMaxMin((vel - avel), 100, -100);
@@ -52,10 +52,19 @@ void CBlackship::setSpeed(bool _setFlag) {
 
 void CBlackship::activate() {
     mSubInput = mNodeHandle.subscribe("bs_input", 100, &CBlackship::inputCallback, this);
+    mStopService = mNodeHandle.advertiseService("stop_service", &CBlackship::setStopFlagServiceHandler, this);
 }
 
 void CBlackship::publish_odom() {
     // TODO
+}
+
+bool CBlackship::setStopFlagServiceHandler(std_srvs::Trigger::Request& req,
+                                           std_srvs::Trigger::Response& res) {
+    mStopFlag = !mStopFlag;
+    res.success = true;
+    res.message = mStopFlag ? "true" : "false";
+    return true;
 }
 
 
