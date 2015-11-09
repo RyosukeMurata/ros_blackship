@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <launch>
-    <arg name="ns" value="blackship"/>
-    <arg name="input_twist_topic_name" value="vw_input"/>
-    <arg name="start_service_name" value="start_service"/>
-    <arg name="stop_service_name" value="stop_service"/>
+    <arg name="ns" default="blackship"/>
+    <arg name="input_twist_topic_name" default="vw_input"/>
+    <arg name="start_service_name" default="start_service"/>
+    <arg name="stop_service_name" default="stop_service"/>
 
     <node ns="$(arg ns)" name="bs_controller"
           pkg="bs_controller" type="bs_controller_node" output="screen" >
