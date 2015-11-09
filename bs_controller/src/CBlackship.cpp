@@ -1,6 +1,9 @@
 
 #include "bs_controller/CBlackship.h"
 
+
+// TODO: Separate ROS perfectly
+
 CBlackship::CBlackship(const ros::NodeHandle& nh) :
     mNodeHandle(nh) {
 

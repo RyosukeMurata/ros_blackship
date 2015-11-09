@@ -44,8 +44,8 @@ static const double ID_IIS = 250;
 static const double STARTX_IIS = 0.0;
 static const double STARTY_IIS = 0.0;
 static const double STARTTHETA_IIS = 0.0;
-static const double MAX_V = 2.0;
-static const double MAX_W = 2.0;
+static const double MAX_V = 0.4;
+static const double MAX_W = 0.4;
 
 }
 
