@@ -9,7 +9,7 @@ CBlackship::CBlackship(const ros::NodeHandle& nh) :
 
     mInputVel = 0.0;
     mInputAVel = 0.0;
-    mStopFlag = false;
+    mStopFlag = true;
     // mPubOdmetry = mNode.advertise<nav_msgs::Odometry::ConstPtr>("bs_odmetry", 100);
 }
 
